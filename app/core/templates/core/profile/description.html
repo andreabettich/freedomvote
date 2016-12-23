@@ -1,80 +1,74 @@
 {% load i18n static thumbnail party %}
 
-<div class="row">
-    <div class="col-md-3 col-lg-3">
-        <img class="img-thumbnail" width="310px" src="{% if politician.image %}{{politician.image|thumbnail_url:'large'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
+<h1>{{ politician.first_name }} {{ politician.last_name }}</h1>
+<div class="row profile-info">
+    <div class="col-sm-12 col-md-3">
+        <img class="img-thumbnail" src="{% if politician.image %}{{politician.image|thumbnail_url:'large'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
+        <div
+         class="spider-container"
+         id="chart"
+         data-url="{% url 'politician_statistic_spider' politician_id=politician.id %}?compare"
+        ></div>
     </div>
-    <div class="col-md-5 col-lg-5 details">
-        <h2 class="mt0">{{ politician.first_name }} {{ politician.last_name }}</h2>
-
-        <div class="row">
-            {% if politician.state.count > 1 %}
-            <div class="col-md-6"><strong>{% trans 'states' %}</strong></div>
-            <div class="col-md-6">
-                <a href="#" data-toggle="popover" data-placement="auto"
-                   title="{% trans 'states' %}"
-                    data-content="{% for state in politician.state.all %}{{state.name}}, {% endfor %}">
-                    {{politician.state_name}}
-                </a>
-            </div>
-            {% else %}
-            <div class="col-md-6"><strong>{% trans 'state' %}</strong></div>
-            <div class="col-md-6">
-                {{politician.state_name}}
-            </div>
-            {% endif %}
-        </div>
-
-        <div class="row">
-            <div class="col-md-6"><strong>{% trans 'party' %}</strong></div>
-            <div class="col-md-6">{% party_tag politician.party %}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12"><strong>{% trans 'past_contributions' %}:</strong> {{politician.past_contributions}}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12"><strong>{% trans 'future_plans' %}:</strong> {{politician.future_plans}}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6"><strong>{% trans 'is_member_of_parliament' %}</strong></div>
-            <div class="col-md-6">{% if politician.is_member_of_parliament %}{% trans 'yes' %}{%else%}{% trans 'no' %}{%endif%}</div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6"><label> {% trans 'show_own_spider' %}</label></div>
-            <div class="col-md-6">
-                {% if 'statistics' in request.COOKIES and request.COOKIES.statistics != '{}' %}
-                <input type="checkbox" id="show_citizen" checked>
+    <div class="col-md-9 details">
+        <table class="table">
+            <tbody>
+                <tr>
+                {% if politician.state.count > 1 %}
+                    <th>{% trans 'states' %}</th>
+                    <td>
+                        <a href="#" data-toggle="popover" data-placement="auto"
+                           title="{% trans 'states' %}"
+                            data-content="{% for state in politician.state.all %}{{state.name}}, {% endfor %}">
+                            {{politician.state_name}}
+                        </a>
+                    </td>
                 {% else %}
-                <a href="{% url 'compare' %}">{% trans 'add_own_opinion' %}</a>
-                <input type="checkbox" id="show_citizen" style="display:none">
+                    <th>{% trans 'state' %}:</th>
+                    <td>{{politician.state_name}}</td>
                 {% endif %}
-            </div>
-        </div>
+                </tr>
+                <tr>
+                    <th>{% trans 'party' %}:</th>
+                    <td>{% party_tag politician.party %}</td>
+                <tr>
+                    <th>{% trans 'past_contributions' %}:</th>
+                    <td>{{politician.past_contributions}}</td>
+                <tr>
+                    <th>{% trans 'future_plans' %}:</th>
+                    <td>{{politician.future_plans}}</td>
+                <tr>
+                    <th>{% trans 'is_member_of_parliament' %}:</th>
+                    <td>{% if politician.is_member_of_parliament %}{% trans 'yes' %}{%else%}{% trans 'no' %}{%endif%}</td>
+                <tr>
+                    <th>{% trans 'show_own_spider' %}</th>
+                    <td>
+                    {% if 'statistics' in request.COOKIES and request.COOKIES.statistics != '{}' %}
+                        <input type="checkbox" id="show_citizen" checked>
+                    {% else %}
+                        <a href="{% url 'compare' %}">{% trans 'add_own_opinion' %}</a>
+                        <input type="checkbox" id="show_citizen" style="display:none">
+                    {% endif %}
+                    </td>
+                </tr>
+
 
         {% if links %}
-        <div class="row">
-            <div class="col-md-12">
-                <strong>{% trans 'links' %}</strong>
-                <hr>
-            </div>
-            <div class="col-md-12">
+        <tr>
+            <th>{% trans 'links' %}</th>
+            <td>
                 {% for link in links %}
-                    <p class="socialmedia-link">
-                        <i class="fa socialmedia-link-icon" aria-hidden="true"></i>
-                        <a class="socialmedia-link-anchor" href="{{link.url}}"></a>
-                    </p>
+                    <ul class="socialmedia-link list-unstyled">
+                        <li>
+                            <i class="fa socialmedia-link-icon" aria-hidden="true"></i>
+                            <a class="socialmedia-link-anchor" href="{{link.url}}"></a>
+                        </li>
+                    </ul>
                 {%endfor%}
-            </div>
-        </div>
+            </td>
+        </tr>
         {% endif %}
+            </tbody>
+        </table>
     </div>
-    <div
-     class="col-md-4 col-lg-4 spider-container"
-     id="chart"
-     data-url="{% url 'politician_statistic_spider' politician_id=politician.id %}?compare"
-    ></div>
 </div>

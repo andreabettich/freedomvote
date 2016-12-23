@@ -12,7 +12,9 @@
 {% endblock %}
 
 {% block 'content' %}
-    {% include 'core/profile/description.html' %}
-    <hr>
-    {% include 'core/profile/questions.html' %}
+    <div class="profile">
+        {% include 'core/profile/description.html' %}
+        <hr>
+        {% include 'core/profile/questions.html' %}
+    </div>
 {% endblock %}

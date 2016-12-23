@@ -37,7 +37,7 @@
                 </li>
             </ul>
             {% endif %}
-            <form action="{% url 'set_language' %}" class="navbar-right navbar-form language" method="post">
+            <form action="{% url 'set_language' %}" class="navbar-right navbar-form languages" method="post">
                 {% csrf_token %}
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
@@ -46,11 +46,13 @@
                 <input name="language" type="hidden" value="{{ language.code }}" />
                 <ul class="navbar-nav nav">
                 {% for language in languages %}
-                    <li><a href="#" data-lang="{{language.code}}">
+                    <li>
+                      <a href="#" data-lang="{{language.code}}">
                         {% if language.code == LANGUAGE_CODE %}<strong>{% endif %}
-                        {{language.code}}
+                        {{language.code|upper}}
                         {% if language.code == LANGUAGE_CODE %}</strong>{% endif %}
-                    </a></li>
+                      </a>
+                    </li>
                 {% endfor %}
                 </ul>
             </form>

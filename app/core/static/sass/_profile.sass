@@ -1,0 +1,51 @@
+.profile
+  &-info, &-questions
+    background-color: #FAFAFA
+  &-info
+    padding: 2.5rem 1rem
+    .img-thumbnail
+      border: 0
+      padding: 0
+      min-width: 100%
+      border-radius: 0
+    .spider-container
+      height: 200px
+      padding-top: 1rem
+    .details
+      p
+        strong
+          padding-right: 5px
+      tbody
+        tr
+          &:nth-child(odd)
+            background-color: #F5F5F5
+          th
+            width: 30%
+          th,td
+            padding: 1rem
+            border-top: 0
+
+  &-questions
+    .striped-list
+      .question-row
+        margin: 0
+        padding: 2.5rem 1rem
+        &:nth-child(odd)
+          background-color: #F5F5F5
+    .desc-toggler
+      cursor: pointer
+      display: block
+
+    .desc-toggler.no-desc
+      color: #777777
+      cursor: default
+
+    .desc
+      background-color: #DDDDDD
+      border: 1px solid lightgrey
+      border: 1px solid lightgrey
+      display: none
+      margin-top: 5px
+      max-height: 200px
+      overflow-y: auto
+      padding: 5px

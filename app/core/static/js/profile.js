@@ -8,8 +8,7 @@ jQuery(function ($){
       chart: {
         polar: true,
         type: 'area',
-        backgroundColor: 'transparent',
-        spacing: [ 10, 90, 10, 90 ]
+        backgroundColor: 'transparent'
       },
       title: {
         text: null
